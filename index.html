@@ -1,107 +1,71 @@
-﻿<!DOCTYPE html>
-<html lang="en-US">
-<head>
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | Sky Box</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+  </head>
+  <body>
+    <div id="unity-container" class="unity-desktop">
+      <canvas id="unity-canvas"></canvas>
+      <div id="unity-loading-bar">
+        <div id="unity-logo"></div>
+        <div id="unity-progress-bar-empty">
+          <div id="unity-progress-bar-full"></div>
+        </div>
+      </div>
+      <div id="unity-footer">
+        <div id="unity-webgl-logo"></div>
+        <div id="unity-fullscreen-button"></div>
+        <div id="unity-build-title">Sky Box</div>
+      </div>
+    </div>
+    <script>
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/playskybox.loader.js";
+      var config = {
+        dataUrl: buildUrl + "/playskybox.data",
+        frameworkUrl: buildUrl + "/playskybox.framework.js",
+        codeUrl: buildUrl + "/playskybox.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "Max Games",
+        productName: "Sky Box",
+        productVersion: "0.1",
+      };
 
-	<title>Sky Box Website</title>
+      var container = document.querySelector("#unity-container");
+      var canvas = document.querySelector("#unity-canvas");
+      var loadingBar = document.querySelector("#unity-loading-bar");
+      var progressBarFull = document.querySelector("#unity-progress-bar-full");
+      var fullscreenButton = document.querySelector("#unity-fullscreen-button");
 
-	<style>
-		a:link {
-			color: white;
-			text-decoration: none;
-			font-size: 50px;
-			font-family: Calibri;
-		}
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        container.className = "unity-mobile";
+        config.devicePixelRatio = 1;
+      } else {
+        canvas.style.width = "960px";
+        canvas.style.height = "600px";
+      }
+      canvas.style.background = "url('" + buildUrl + "/playskybox.jpg') center / cover";
+      loadingBar.style.display = "block";
 
-		a:visited {
-			color: white;
-			text-decoration: none;
-			font-size: 50px;
-		}
-
-		a:hover {
-			padding: 0px;
-			border: 3px solid white;
-			background-color: transparent;
-			text-decoration: none;
-		}
-
-		a:active {
-			color: white;
-			background-color: transparent;
-			text-decoration: none;
-		}
-
-		p {
-			font-size: 50px;
-			color: white;
-			margin: 20px;
-			padding: 20px;
-			border: 5px solid white;
-			font-family: Calibri;
-		}
-
-		h1 {
-			font-size: 100px;
-			color: red;
-			text-align: center;
-			background-color: white;
-			font-family: Calibri;
-		}
-
-		h2 {
-			font-size: 50px;
-			color: white;
-			font-family: Calibri;
-		}
-
-		html {
-			height: 100%;
-			width: 100%
-		}
-
-		body {
-			height: 100%;
-			margin: 0;
-			background-repeat: no-repeat;
-			background-attachment: fixed;
-		}
-	</style>
-	<link rel="shortcut icon" type="image/png" href="images/skybox_icon.png"
-</head>
-<body style="background-image: linear-gradient(dodgerblue,black); no-repeat;">
-
-<h1  title="This is the name of my game"><b>SKY BOX</b></h1>
-<p style="position:absolute; top:200px; left:0px;"> Hello my name is Max Bouzereau, I am 14 years old and have created this mobile video game named “Sky Box” that can be downloaded on the Android Play Store. I love Programming and am trying to learn more languages and try to be comfortable with 3D modeling with Blender for example. For more information you can follow my instagram account or send me an email:</p>
-<h2 style="position:absolute; top:540px; left:10px;"><u>Contact me:</u></h2>
-<a href="https://www.instagram.com/maxs_world8/" target="_blank">
-	<img src="images/instagram_icon.png" alt="Instagram logo" style="position:absolute; top:660px; left:15px; width:80px; height:80px"><a href="https://www.instagram.com/maxs_world8/" style="position:absolute; left:110px; top:670px" target="_blank">@maxs_world8</a></img><br><br />
-	<a href="mailto:maxbouzereau@gmail.com" target="_blank"><img src="images/gmail_icon.png" alt="Gmail logo" style="position:absolute; top:765px; left:15px; width:80px; height:60px"><a href="mailto:maxbouzereau@gmail.com" style="position:absolute; left:110px; top:770px" target="_blank">maxbouzereau@gmail.com</a></img></a><br /><br />
-	<a href="https://maxbouzereau.wixsite.com/skybox" target="_blank"><img src="images/skybox_icon.png" alt="Sky Box logo" style="position:absolute; top:850px; left:14px; width:80px; height:80px"><a href="https://maxbouzereau.wixsite.com/skybox" style="position:absolute; left:110px; top:870px" target="_blank">Main Website</a></img></a><br /><br /><br />
-	<h2 style="position:absolute; top:910px; left:10px;"><u>Download links for Sky Box:</u></h2><br />
-	<a href="downloads/pc.exe" targetS="_blank" download><img src="images/windows.png" alt="Windows logo" style="position:absolute; top:1040px; left:10px; width:80px; height:80px"><a href="downloads/pc.exe" style="position:absolute; left:110px; top:1050px" target="_blank">PC Download</a></img></a><br /><br />
-	<a href="https://play.google.com/store/apps/details?id=com.MaxGames.SkyBox" target="_blank"><img src="https://cdn.androidbeat.com/wp-content/uploads/2017/05/New-Play-Store-logo.png" alt="Play Store logo" style="position:absolute; top:1130px; left:0px; width:100px; height:100px"><a href="https://play.google.com/store/apps/details?id=com.MaxGames.SkyBox" style="position:absolute; left:110px; top:1150px" target="_blank">Play Store Download</a></img></a><br /><br />
-	<a href="downloads/apk.apk" target="_blank" download><img src="images/android.png" alt="Android logo" style="position:absolute; top:1250px; left:0px; width:100px; height:100px"><a href="downloads/apk.apk" style="position:absolute; left:110px; top:1270px" target="_blank" download>Apk Download</a></img></a><br /><br />
-	<a href="downloads/mac.zip" target="_blank" download><img src="images/mac.jpg" alt="Mac logo" style="position:absolute; top:1365px; left:10px; width:80px; height:90x"><a href="downloads/mac.zip" style="position:absolute; left:110px; top:1390px" target="_blank" download>Mac Download</a></img></a><br /><br />
-	<a href="playskybox/play.html" style="position: absolute; top: 580px; left: 800px; font-size: 100px; padding-top: 0px; padding-right: 295px; padding-bottom: 0px; padding-left: 300px;"><b>PLAY</b></a>
-
-	<img style="position:absolute; top:715px; left:800px; width:800px; height:800px" "title=" This is the icon of Sky Box" src="images/skybox_icon.png" title="This is the icon of Sky Box">
-	<img style="position:absolute; top:1535px; left:0px; width:1905px; height:900px" title="This is an image of Sky Box as an example" src="images/pub_1.png" width="1500" height="720">
-	<img style="position:absolute; top:2330px; left:0px; width:1905px; height:1100px" title="This is an image of Sky Box as an example" src="images/pub_2.png" width="1500" height="720">
-	<img style="position:absolute; top:3328px; left:0px; width:1905px; height:800px" title="This is an image of Sky Box as an example" src="images/max_games.jpeg" width="1500" height="720">
-	<img style="position:absolute; top:4128px; left:0px; width:1905px; height:800px" title="This is an image of Sky Box as an example" src="images/gameplay.jpeg" width="1500" height="720">
-
-
-	<address style="color: white; position: absolute; top: 4950px; left: 10px;">
-		This website was created by:<br>
-		Max Bouzereau<br>
-		To contact me visit my main website:<br>
-		<a href="https://maxbouzereau.wixsite.com/skybox" target="_blank" style="font-size:14px; text-decoration:underline;">HERE</a><br>
-		Or call me:<br>
-		+852 9847 9130
-	</address>
-
-
-
-</body>
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          progressBarFull.style.width = 100 * progress + "%";
+        }).then((unityInstance) => {
+          loadingBar.style.display = "none";
+          fullscreenButton.onclick = () => {
+            unityInstance.SetFullscreen(1);
+          };
+        }).catch((message) => {
+          alert(message);
+        });
+      };
+      document.body.appendChild(script);
+    </script>
+  </body>
 </html>
-
